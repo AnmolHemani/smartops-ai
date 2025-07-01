@@ -14,4 +14,9 @@ def generate_gemini_response(prompt, context):
         }]
     }
     response = requests.post(GEMINI_URL, json=payload)
-    return response.json()['candidates'][0]['content']['parts'][0]['text']
+    data = response.json()
+    print("Gemini API response:", data)  # Debug print
+    if 'candidates' in data:
+        return data['candidates'][0]['content']['parts'][0]['text']
+    else:
+        return f"Error from Gemini API: {data}"
